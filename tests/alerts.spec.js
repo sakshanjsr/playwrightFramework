@@ -1,10 +1,15 @@
 const{test , expect} = require('@playwright/test')
 
-test("Handle Dropdown" , async function ({page}) {
+test("Handle Alerts @regression" , async function ({page}) {
 
 
     await page.goto("https://the-internet.herokuapp.com/javascript_alerts")
-    await page.pause()
-    await page.locator("//button[contains(text(),'Alert')]").click()
+   
+
+    page.on('dialog' , async (alertWindow) => {
+       
+        expect(alertWindow.type()).toContain("alert")
+    })
+     await page.locator("//button[contains(text(),'Alert')]").click()
     
 })
